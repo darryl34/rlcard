@@ -1,0 +1,1 @@
+from rlcard.games.leduc_onebet.game import LeducOneBetGame as Game

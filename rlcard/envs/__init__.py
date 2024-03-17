@@ -29,6 +29,11 @@ register(
 )
 
 register(
+    env_id='leduc-onebet',
+    entry_point='rlcard.envs.leduc_onebet:LeducOneBetEnv'
+)
+
+register(
     env_id='uno',
     entry_point='rlcard.envs.uno:UnoEnv',
 )
