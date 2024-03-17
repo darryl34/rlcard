@@ -14,8 +14,8 @@ class LeducOneBetGame(Game):
         super().__init__(allow_step_back, num_players)
         self.small_blind = 1
         self.big_blind = 1
-        self.raise_amount = 2
-        self.allowed_raise_num = 2
+        self.raise_amount = 1       # amount of chips to raise
+        self.allowed_raise_num = 1  # number of raises allowed in each betting round
 
     def init_game(self):
         ''' Initialilze the game of Limit Texas Hold'em
@@ -44,8 +44,7 @@ class LeducOneBetGame(Game):
         # reveal the public card
         self.public_card = self.dealer.deal_card()
         # Randomly choose a player to start first
-        s = self.np_random.randint(0, self.num_players)
-        self.game_pointer = s
+        self.game_pointer = self.np_random.randint(0, self.num_players)
 
         # Initilize a bidding round, in the first round, the big blind and the small blind needs to
         # be passed to the round for processing.
@@ -56,7 +55,7 @@ class LeducOneBetGame(Game):
 
         self.round.start_new_round(game_pointer=self.game_pointer, raised=[p.in_chips for p in self.players])
 
-        # Count the round. There are 2 rounds in each game.
+        # Count the round. There is only 1 betting round in each game.
         self.round_counter = 0
 
         # Save the hisory for stepping back to the last state.
