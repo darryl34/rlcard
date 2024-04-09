@@ -211,6 +211,11 @@ def tournament(env, num):
     counter = 0
     while counter < num:
         _, _payoffs = env.run(is_training=False)
+
+        test_state = env.get_perfect_information()
+        # print('test_state', test_state)
+        # print("\n")
+
         if isinstance(_payoffs, list):
             for _p in _payoffs:
                 for i, _ in enumerate(payoffs):

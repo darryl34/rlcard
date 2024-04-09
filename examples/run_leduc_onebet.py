@@ -1,5 +1,7 @@
 import os
 import sys
+import torch
+# import pytorch as torch
 
 sys.path.insert(0, os.getcwd())
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
@@ -15,6 +17,8 @@ from rlcard.utils import (
     plot_curve,
 )
 
+
+
 # Make environment
 env = rlcard.make('leduc-onebet')
 
@@ -23,8 +27,10 @@ dqn_agent = DQNAgent(num_actions=env.num_actions,
                      state_shape=env.state_shape[0],
                      mlp_layers=[64,64],
                      device=get_device())
+
 rand_agent = RandomAgent(num_actions=env.num_actions)
 env.set_agents([dqn_agent, rand_agent])
+
 
 num_eps = 5000
 eval_every = 100
@@ -52,3 +58,12 @@ with Logger('leduc_holdem_dqn') as logger:
     csv_path, fig_path = logger.csv_path, logger.fig_path
 
 plot_curve(csv_path, fig_path, 'DQN on one step Leduc Holdem')
+
+default_path = os.path.join(os.getcwd(), "experiments/leduc_holdem_dqn_result/")
+if not os.path.exists(default_path):
+    os.makedirs(default_path)
+save_path = os.path.join(default_path, 'model.pth')
+
+# Assuming dqn_agent is your model or a dictionary containing your model's state
+torch.save(dqn_agent, save_path)
+print('Model saved in', save_path)

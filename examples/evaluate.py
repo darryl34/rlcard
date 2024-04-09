@@ -1,7 +1,11 @@
 ''' An example of evluating the trained models in RLCard
 '''
 import os
+import sys
 import argparse
+
+sys.path.insert(0, os.getcwd())
+os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 
 import rlcard
 from rlcard.agents import (
@@ -13,6 +17,8 @@ from rlcard.utils import (
     set_seed,
     tournament,
 )
+
+
 
 def load_model(model_path, env=None, position=None, device=None):
     if os.path.isfile(model_path):  # Torch model
@@ -41,7 +47,8 @@ def evaluate(args):
     set_seed(args.seed)
 
     # Make the environment with seed
-    env = rlcard.make(args.env, config={'seed': args.seed})
+    # env = rlcard.make(args.env, config={'seed': args.seed})
+    env = rlcard.make('leduc-onebet')
 
     # Load models
     agents = []
@@ -49,8 +56,11 @@ def evaluate(args):
         agents.append(load_model(model_path, env, position, device))
     env.set_agents(agents)
 
+    print("agents", agents)
+
     # Evaluate
     rewards = tournament(env, args.num_games)
+    print("rewards", rewards)
     for position, reward in enumerate(rewards):
         print(position, args.models[position], reward)
 
@@ -59,7 +69,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--env',
         type=str,
-        default='leduc-holdem',
+        default='leduc-onebet',
         choices=[
             'blackjack',
             'leduc-holdem',
@@ -76,7 +86,7 @@ if __name__ == '__main__':
         nargs='*',
         default=[
             'experiments/leduc_holdem_dqn_result/model.pth',
-            'random',
+            'experiments/leduc_holdem_cfr_result/cfr_model',
         ],
     )
     parser.add_argument(

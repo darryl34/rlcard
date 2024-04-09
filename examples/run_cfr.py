@@ -1,7 +1,11 @@
 ''' An example of solve Leduc Hold'em with CFR (chance sampling)
 '''
 import os
+import sys
 import argparse
+
+sys.path.insert(0, os.getcwd())
+os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 
 import rlcard
 from rlcard.agents import (
@@ -18,14 +22,14 @@ from rlcard.utils import (
 def train(args):
     # Make environments, CFR only supports Leduc Holdem
     env = rlcard.make(
-        'leduc-holdem',
+        'leduc-onebet',
         config={
             'seed': 0,
             'allow_step_back': True,
         }
     )
     eval_env = rlcard.make(
-        'leduc-holdem',
+        'leduc-onebet',
         config={
             'seed': 0,
         }

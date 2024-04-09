@@ -63,6 +63,8 @@ class LeducOneBetGame(Game):
 
         state = self.get_state(self.game_pointer)
 
+        print('State',state)
+
         return state, self.game_pointer
     
     def step(self, action):

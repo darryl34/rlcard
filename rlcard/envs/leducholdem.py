@@ -68,6 +68,8 @@ class LeducholdemEnv(Env):
         extracted_state['raw_legal_actions'] = [a for a in state['legal_actions']]
         extracted_state['action_record'] = self.action_recorder
 
+        print(extracted_state['action_record'])
+
         return extracted_state
 
     def get_payoffs(self):
@@ -108,4 +110,5 @@ class LeducholdemEnv(Env):
         state['current_round'] = self.game.round_counter
         state['current_player'] = self.game.game_pointer
         state['legal_actions'] = self.game.get_legal_actions()
+
         return state
