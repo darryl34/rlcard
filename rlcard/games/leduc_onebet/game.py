@@ -44,7 +44,9 @@ class LeducOneBetGame(Game):
         # reveal the public card
         self.public_card = self.dealer.deal_card()
         # Randomly choose a player to start first
-        self.game_pointer = self.np_random.randint(0, self.num_players)
+        # self.game_pointer = self.np_random.randint(0, self.num_players)
+        # Player 1 always starts first
+        self.game_pointer = 0
 
         # Initilize a bidding round, in the first round, the big blind and the small blind needs to
         # be passed to the round for processing.
