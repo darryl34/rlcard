@@ -38,6 +38,10 @@ def load_model(model_path, env=None, position=None, device=None):
     
     return agent
 
+
+# pairwise comparison between 
+# (1) among DQN, CFR and custom LP agent
+# (2) DQN, CFR and custom with random agent (baseline)
 def evaluate(args):
 
     # Check whether gpu is available

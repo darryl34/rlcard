@@ -8,6 +8,7 @@ os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 
 import rlcard
 from rlcard.agents import DQNAgent, RandomAgent
+from rlcard import models
 from rlcard.utils import (
     get_device,
     set_seed,
@@ -16,8 +17,6 @@ from rlcard.utils import (
     Logger,
     plot_curve,
 )
-
-
 
 # Make environment
 env = rlcard.make('leduc-onebet')
@@ -29,8 +28,10 @@ dqn_agent = DQNAgent(num_actions=env.num_actions,
                      device=get_device())
 
 rand_agent = RandomAgent(num_actions=env.num_actions)
-env.set_agents([dqn_agent, rand_agent])
 
+cfr_agent = models.load('leduc-holdem-cfr').agents[0]
+
+env.set_agents([dqn_agent, rand_agent])
 
 num_eps = 5000
 eval_every = 100
@@ -52,7 +53,7 @@ with Logger('leduc_holdem_dqn') as logger:
         if ep % eval_every == 0:
             logger.log_performance(
                 ep, 
-                tournament(env, eval_games)[0]
+                tournament(eval_env, eval_games)[0]
             )
 
     csv_path, fig_path = logger.csv_path, logger.fig_path

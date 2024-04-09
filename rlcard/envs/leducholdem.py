@@ -68,7 +68,7 @@ class LeducholdemEnv(Env):
         extracted_state['raw_legal_actions'] = [a for a in state['legal_actions']]
         extracted_state['action_record'] = self.action_recorder
 
-        print(extracted_state['action_record'])
+        #print(extracted_state['action_record'])
 
         return extracted_state
 
