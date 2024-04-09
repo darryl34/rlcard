@@ -9,13 +9,15 @@ sys.path.insert(0, os.getcwd())
 import rlcard
 from rlcard import models
 from rlcard.agents import LeducholdemHumanAgent as HumanAgent
+from rlcard.agents import CustomLeducOneBetAgent as CustomAgent
 from rlcard.utils import print_card
 
 # Make environment
-env = rlcard.make('leduc-onebet')
+env = rlcard.make('leduc-onebet', config={'seed': 0})
 human_agent = HumanAgent(env.num_actions)
-cfr_agent = models.load('leduc-holdem-cfr').agents[0]
-env.set_agents([human_agent, cfr_agent])
+# cfr_agent = models.load('leduc-holdem-cfr').agents[0]
+custom_agent = CustomAgent()
+env.set_agents([custom_agent, human_agent])
 
 print(">> Leduc Hold'em pre-trained model")
 
